@@ -1,0 +1,6 @@
+springProfile: prod
+gcp-cluster: prod-gcp
+min-replicas: 2
+max-replicas: 2
+ingresses:
+  - "https://yrkesskade-ekstern-gateway.nav.no"

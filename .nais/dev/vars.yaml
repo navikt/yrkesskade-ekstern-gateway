@@ -1,0 +1,6 @@
+springProfile: dev
+gcp-cluster: dev-gcp
+min-replicas: 1
+max-replicas: 1
+ingresses:
+  - "https://yrkesskade-ekstern-gateway.dev.nav.no"

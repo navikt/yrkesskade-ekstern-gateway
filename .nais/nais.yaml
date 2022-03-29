@@ -1,0 +1,44 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: yrkesskade-ekstern-gateway
+  namespace: yrkesskade
+  labels:
+    team: yrkesskade
+spec:
+  image: {{image}}
+  liveness:
+    path: "/internal/health"
+    port: 8080
+    initialDelay: 20
+    timeout: 60
+  readiness:
+    path: "/internal/health"
+    port: 8080
+    initialDelay: 20
+    timeout: 60
+  replicas:
+    min: {{min-replicas}}
+    max: {{max-replicas}}
+    cpuThresholdPercentage: 50
+  prometheus:
+    enabled: true
+    path: "/internal/prometheus"
+  azure:
+    application:
+      enabled: true
+  env:
+    - name: SPRING_PROFILES_ACTIVE
+      value: {{springProfile}}
+  resources:
+    limits:
+      cpu: "2"
+      memory: "2Gi"
+    requests:
+      cpu: "200m"
+      memory: "1024Mi"
+  ingresses:
+  {{#each ingresses as |url|}}
+     - {{url}}
+  {{/each}}
+  webProxy: true
