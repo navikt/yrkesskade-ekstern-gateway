@@ -1,4 +1,4 @@
-package no.nav.yrkesskade.proxy
+package no.nav.yrkesskade.ekstern.gateway
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
