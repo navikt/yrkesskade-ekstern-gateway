@@ -1,0 +1,47 @@
+spring:
+  application.name: yrkesskade-ekstern-gateway
+  cloud:
+    gateway:
+      httpclient:
+        wiretap: true
+      httpserver:
+        wiretap: true
+      default-filters:
+        - RewritePath=/(?<base>.*?)/(?<segment>.*), /$\{segment}
+      routes:
+        - id: swagger
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/**
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
+#          accepted-audience: ${AZURE_APP_CLIENT_ID}, api://${AZURE_APP_CLIENT_ID}
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics, prometheus, gateway
+      base-path: /internal
+      path-mapping.prometheus: prometheus
+  metrics:
+    export.prometheus.enabled: true
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    reactor:
+      netty: TRACE
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE
