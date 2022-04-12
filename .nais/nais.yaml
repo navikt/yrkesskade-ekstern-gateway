@@ -24,9 +24,15 @@ spec:
   prometheus:
     enabled: true
     path: "/internal/prometheus"
+  tokenx:
+    enabled: true
   azure:
     application:
       enabled: true
+  accessPolicy:
+    outbound:
+      rules:
+        - application: yrkesskade-melding-api
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: {{springProfile}}

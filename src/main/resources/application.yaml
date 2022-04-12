@@ -6,19 +6,35 @@ spring:
         wiretap: true
       httpserver:
         wiretap: true
-      default-filters:
-        - RewritePath=/(?<base>.*?)/(?<segment>.*), /$\{segment}
+#      default-filters:
+#        - RewritePath=/(?<base>.*?)/(?<segment>.*), /$\{segment}
       routes:
-        - id: swagger
+        - id: yrkesskade-melding-api
           uri: http://localhost:8080
           predicates:
             - Path=/api/**
-#  security:
-#    oauth2:
-#      resourceserver:
-#        jwt:
-#          issuer-uri: ${AZURE_OPENID_CONFIG_ISSUER}
-#          accepted-audience: ${AZURE_APP_CLIENT_ID}, api://${AZURE_APP_CLIENT_ID}
+
+YRKESSKADE_MELDING_API_CLIENT_ID: ${NAIS_CLUSTER_NAME}:yrkesskade:yrkesskade-melding-api
+MASKINPORTEN_WELL_KNOWN_URL: https://ver2.maskinporten.no/.well-known/oauth-authorization-server
+no.nav.security.jwt:
+  issuer:
+    maskinporten:
+      validation:
+        optional-claims: sub
+      discoveryurl: ${MASKINPORTEN_WELL_KNOWN_URL}
+      accepted_audience: unspecified # https://docs.digdir.no/docs/Maskinporten/maskinporten_guide_apitilbyder#eksempel-p%C3%A5-token
+  client:
+    registration:
+      yrkesskade-melding-api:
+        token-endpoint-url: https://fakedings.dev-gcp.nais.io/fake/tokenx
+        grant-type: urn:ietf:params:oauth:grant-type:token-exchange
+        scope: api://${YRKESSKADE_MELDING_API_CLIENT_ID}/.default
+        authentication:
+          client-id: ${TOKEN_X_CLIENT_ID}
+          client-jwk: ${TOKEN_X_PRIVATE_JWK}
+          client-auth-method: private_key_jwt
+        token-exchange:
+          audience: ${YRKESSKADE_MELDING_API_CLIENT_ID}
 
 management:
   endpoint:
