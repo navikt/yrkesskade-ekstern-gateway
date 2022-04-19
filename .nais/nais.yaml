@@ -24,6 +24,16 @@ spec:
   prometheus:
     enabled: true
     path: "/internal/prometheus"
+  maskinporten:
+    enabled: true
+    scopes:
+      exposes:
+        - name: "skademelding.write"
+          enabled: true
+          product: "yrkesskade"
+          allowedIntegrations:
+            - maskinporten
+          atMaxAge: 120
   tokenx:
     enabled: true
   azure:
