@@ -8,3 +8,6 @@ MASKINPORTEN_WELL_KNOWN_URL: https://fakedings.dev-gcp.nais.io/fake/.well-known/
 TOKEN_X_WELL_KNOWN_URL: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
 TOKEN_X_CLIENT_ID: dev-gcp:yrkesskade:yrkesskade-ekstern-gateway
 TOKEN_X_PRIVATE_JWK: ./src/test/resources/jwks/jwk.json
+
+
+YRKESSKADE_MELDING_API: http://localhost:8080

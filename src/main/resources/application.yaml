@@ -10,7 +10,7 @@ spring:
 #        - RewritePath=/(?<base>.*?)/(?<segment>.*), /$\{segment}
       routes:
         - id: yrkesskade-melding-api
-          uri: http://localhost:8080
+          uri: ${YRKESSKADE_MELDING_API}
           predicates:
             - Path=/api/**
 
