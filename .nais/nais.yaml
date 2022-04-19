@@ -31,12 +31,6 @@ spec:
         - name: "skademelding.write"
           enabled: true
           product: "yrkesskade"
-          allowedIntegrations:
-            - maskinporten
-          atMaxAge: 120
-          consumers:
-            - name: "NAV"
-              orgno: "889640782"
   tokenx:
     enabled: true
   azure:
