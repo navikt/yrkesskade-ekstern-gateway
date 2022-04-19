@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Disabled
 
 private const val TOKENX_CLIENT_NAME = "yrkesskade-melding-api"
 
-@ActiveProfiles("test")
-@SpringBootTest
+//@ActiveProfiles("test")
+//@SpringBootTest
+//@Disabled
 internal class TokenXClientTest {
 
     @Autowired
@@ -23,7 +25,7 @@ internal class TokenXClientTest {
 
     }
 
-    @Test
+//    @Test
     fun exchange() {
         val exchangeToken = tokenXClient.exchange(token, TOKENX_CLIENT_NAME)
         Assertions.assertThat(exchangeToken).isNotNull
