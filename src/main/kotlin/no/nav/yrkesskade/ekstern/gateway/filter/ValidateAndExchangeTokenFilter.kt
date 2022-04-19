@@ -41,6 +41,7 @@ class ValidateAndExchangeTokenFilter(
 
             exchange.request.mutate()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer $exchangedToken")
+                .header("x-nav-ys-kilde", "ekstern")
                 .build()
         } else {
             return response.apply {
