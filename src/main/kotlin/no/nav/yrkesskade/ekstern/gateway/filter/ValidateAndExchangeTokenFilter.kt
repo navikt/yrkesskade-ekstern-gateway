@@ -17,7 +17,7 @@ import java.lang.invoke.MethodHandles
 private const val MASKINPORTEN = "maskinporten"
 
 /**
- * kul beskrivelse
+ * Validerer Maskinporten-token og veksler i TokenX før requestet sendes videre til riktig uri.
  */
 @Component
 class ValidateAndExchangeTokenFilter(

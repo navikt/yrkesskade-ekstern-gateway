@@ -20,6 +20,19 @@ class TokenXClient(
     val clientConfigurationProperties: ClientConfigurationProperties,
 ) {
 
+    /**
+     * NB: navn på registration ([client]) må være identisk med gateway route-id
+     * Eks:
+     * <code>
+     *     ...
+     *      routes:
+     *          - id: yrkesskade-melding-api
+     *      ...
+     *      client:
+     *          registration:
+     *              yrkesskade-melding-api:
+     *   </code>
+     */
     fun exchange(token: String, client: String): String? {
         val clientProperties = clientConfigurationProperties.registration[client]
         if (clientProperties == null) {
