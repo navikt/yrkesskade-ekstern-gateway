@@ -1,1 +1,2 @@
-YRKESSKADE_MELDING_API: http://yrkesskade-melding-api.yrkesskade.svc.cluster.local
+YRKESSKADE_MELDING_API: https://yrkesskade-melding-api.dev.intern.nav.no
+
