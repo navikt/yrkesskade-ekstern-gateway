@@ -31,13 +31,17 @@ spec:
         - name: "skademelding.write"
           enabled: true
           product: "yrkesskade"
-          atMaxAge: 120
+          atMaxAge: {{max-token-age}}
           consumers:
             - name: "NAV"
               orgno: "889640782"
         - name: "kodeverk.read"
           enabled: true
           product: "yrkesskade"
+          atMaxAge: {{max-token-age}}
+          consumers:
+            - name: "NAV"
+              orgno: "889640782"
   tokenx:
     enabled: true
   azure:
