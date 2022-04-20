@@ -20,7 +20,7 @@ no.nav.security.jwt:
   issuer:
     maskinporten:
       validation:
-        optional-claims: sub
+        optional-claims: aud,sub,nbf
       discoveryurl: ${MASKINPORTEN_WELL_KNOWN_URL}
       accepted_audience: unspecified # https://docs.digdir.no/docs/Maskinporten/maskinporten_guide_apitilbyder#eksempel-p%C3%A5-token
   client:
