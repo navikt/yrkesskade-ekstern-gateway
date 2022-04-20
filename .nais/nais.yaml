@@ -31,6 +31,9 @@ spec:
         - name: "skademelding.write"
           enabled: true
           product: "yrkesskade"
+        - name: "kodeverk.read"
+          enabled: true
+          product: "yrkesskade"
   tokenx:
     enabled: true
   azure:
