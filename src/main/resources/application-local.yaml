@@ -11,3 +11,4 @@ TOKEN_X_PRIVATE_JWK: ./src/test/resources/jwks/jwk.json
 
 
 YRKESSKADE_MELDING_API: http://localhost:8080
+YRKESSKADE_KODEVERK: http://localhost:8080
