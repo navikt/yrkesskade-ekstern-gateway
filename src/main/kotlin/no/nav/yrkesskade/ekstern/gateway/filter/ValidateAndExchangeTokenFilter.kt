@@ -1,6 +1,8 @@
 package no.nav.yrkesskade.ekstern.gateway.filter
 
+import no.nav.security.token.support.core.jwt.JwtToken
 import no.nav.yrkesskade.ekstern.gateway.config.ScopeValidationConfiguration
+import no.nav.yrkesskade.ekstern.gateway.config.TokenXClientListProperties
 import no.nav.yrkesskade.ekstern.gateway.tokenx.TokenXClient
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -23,11 +25,12 @@ private const val MASKINPORTEN = "maskinporten"
  * Validerer Maskinporten-token og veksler i TokenX før requestet sendes videre til riktig uri.
  */
 @Component
-@EnableConfigurationProperties(ScopeValidationConfiguration::class)
+@EnableConfigurationProperties(value = [ScopeValidationConfiguration::class, TokenXClientListProperties::class])
 class ValidateAndExchangeTokenFilter(
     val tokenXClient: TokenXClient,
     val validationHandler: JwtTokenValidationHandler,
-    val scopeValidationConfiguration: ScopeValidationConfiguration
+    val scopeValidationConfiguration: ScopeValidationConfiguration,
+    val tokenXClientListProperties: TokenXClientListProperties
 ) : GlobalFilter {
     val logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
 
@@ -44,16 +47,27 @@ class ValidateAndExchangeTokenFilter(
                 return respondWithError(response, HttpStatus.FORBIDDEN)
             }
 
-            val exchangedToken = tokenXClient.exchange(maskinportenToken.tokenAsString, resolveJwtClient(exchange))
+            exchangeTokenIfNecessary(maskinportenToken, exchange)
 
             exchange.request.mutate()
-                .header(HttpHeaders.AUTHORIZATION, "Bearer $exchangedToken")
                 .header("x-nav-ys-kilde", "ekstern")
                 .build()
         } else {
             return respondWithError(response, HttpStatus.UNAUTHORIZED)
         }
         return chain!!.filter(exchange)
+    }
+
+    private fun exchangeTokenIfNecessary(maskinportenToken: JwtToken, exchange: ServerWebExchange) {
+        val client = resolveRouteId(exchange)
+        if (!tokenXClientListProperties.clientList.contains(client)) {
+            return
+        }
+
+        val exchangedToken = tokenXClient.exchange(maskinportenToken.tokenAsString, client)
+        exchange.request.mutate()
+            .header(HttpHeaders.AUTHORIZATION, "Bearer $exchangedToken")
+            .build()
     }
 
     private fun respondWithError(response: ServerHttpResponse, status: HttpStatus): Mono<Void> {
@@ -63,7 +77,7 @@ class ValidateAndExchangeTokenFilter(
     }
 
     private fun validateScope(exchange: ServerWebExchange, scopeFromToken: String): Boolean {
-        val scopesForRoute = scopeValidationConfiguration.scopes[resolveJwtClient(exchange)]
+        val scopesForRoute = scopeValidationConfiguration.scopes[resolveRouteId(exchange)]
         val matchingScope = scopesForRoute?.find { route ->
             AntPathMatcher().match(route.path, exchange.request.path.toString())
         }
@@ -77,7 +91,7 @@ class ValidateAndExchangeTokenFilter(
         return matchingScope?.name == scopeFromToken
     }
 
-    private fun resolveJwtClient(exchange: ServerWebExchange): String {
+    private fun resolveRouteId(exchange: ServerWebExchange): String {
         val route: Route = exchange.attributes[ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR] as Route
         return route.id
     }

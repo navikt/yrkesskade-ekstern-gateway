@@ -31,6 +31,9 @@ token:
       yrkesskade-kodeverk:
         - name: "nav:yrkesskade:kodeverk.read"
           path: /api/v1/kodeverk/**
+  tokenx:
+    client-list:
+      - yrkesskade-melding-api
 
 YRKESSKADE_MELDING_API_CLIENT_ID: ${NAIS_CLUSTER_NAME}:yrkesskade:yrkesskade-melding-api
 MASKINPORTEN_WELL_KNOWN_URL: https://ver2.maskinporten.no/.well-known/oauth-authorization-server
