@@ -16,7 +16,7 @@ spring:
         - id: yrkesskade-kodeverk
           uri: ${YRKESSKADE_KODEVERK}
           predicates:
-            - Path=/api/v1/skademeldinger
+            - Path=/api/v1/kodeverk/**
 
 token:
   validation:
