@@ -51,6 +51,7 @@ spec:
     outbound:
       rules:
         - application: yrkesskade-melding-api
+        - application: yrkesskade-kodeverk
     inbound:
       rules:
         - application: yrkesskade-melding-api
