@@ -32,29 +32,27 @@ class ValidateAndExchangeTokenFilter(
     val scopeValidationConfiguration: ScopeValidationConfiguration,
     val tokenXClientListProperties: TokenXClientListProperties
 ) : GlobalFilter {
-    val logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
 
     override fun filter(exchange: ServerWebExchange?, chain: GatewayFilterChain?): Mono<Void> {
         val response = exchange!!.response
         val validatedTokens = validationHandler.getValidatedTokens(exchange.request)
 
-        if (validatedTokens.hasValidToken()) {
-            val maskinportenToken = validatedTokens.getJwtToken(MASKINPORTEN)
-            logger.info(maskinportenToken.tokenAsString)
-
-            val validScope = validateScope(exchange, maskinportenToken.jwtTokenClaims.get("scope") as String)
-            if (!validScope) {
-                return respondWithError(response, HttpStatus.FORBIDDEN)
-            }
-
-            exchangeTokenIfNecessary(maskinportenToken, exchange)
-
-            exchange.request.mutate()
-                .header("x-nav-ys-kilde", "ekstern")
-                .build()
-        } else {
+        if (!validatedTokens.hasValidToken()) {
             return respondWithError(response, HttpStatus.UNAUTHORIZED)
         }
+
+        val maskinportenToken = validatedTokens.getJwtToken(MASKINPORTEN)
+
+        val validScope = validateScope(exchange, maskinportenToken.jwtTokenClaims.get("scope") as String)
+        if (!validScope) {
+            return respondWithError(response, HttpStatus.FORBIDDEN)
+        }
+
+        exchangeTokenIfNecessary(maskinportenToken, exchange)
+
+        exchange.request.mutate()
+            .header("x-nav-ys-kilde", "ekstern")
+            .build()
         return chain!!.filter(exchange)
     }
 
