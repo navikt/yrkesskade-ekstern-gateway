@@ -4,22 +4,17 @@ import no.nav.security.token.support.core.jwt.JwtToken
 import no.nav.yrkesskade.ekstern.gateway.ScopeValidator
 import no.nav.yrkesskade.ekstern.gateway.config.ScopeValidationConfiguration
 import no.nav.yrkesskade.ekstern.gateway.config.TokenXClientListProperties
-import no.nav.yrkesskade.ekstern.gateway.resolveRouteId
+import no.nav.yrkesskade.ekstern.gateway.getRouteId
 import no.nav.yrkesskade.ekstern.gateway.tokenx.TokenXClient
-import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.gateway.filter.GatewayFilterChain
 import org.springframework.cloud.gateway.filter.GlobalFilter
-import org.springframework.cloud.gateway.route.Route
-import org.springframework.cloud.gateway.support.ServerWebExchangeUtils
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.server.reactive.ServerHttpResponse
 import org.springframework.stereotype.Component
-import org.springframework.util.AntPathMatcher
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
-import java.lang.invoke.MethodHandles
 
 private const val MASKINPORTEN = "maskinporten"
 
@@ -59,7 +54,7 @@ class ValidateAndExchangeTokenFilter(
     }
 
     private fun exchangeTokenIfNecessary(maskinportenToken: JwtToken, exchange: ServerWebExchange) {
-        val client = resolveRouteId(exchange)
+        val client = exchange.getRouteId()
         if (!tokenXClientListProperties.clientList.contains(client)) {
             return
         }
@@ -72,7 +67,7 @@ class ValidateAndExchangeTokenFilter(
 
     private fun respondWithError(response: ServerHttpResponse, status: HttpStatus): Mono<Void> {
         return response.apply {
-            this.setStatusCode(status)
+            this.statusCode = status
         }.setComplete()
     }
 }

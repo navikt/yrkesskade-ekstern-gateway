@@ -9,7 +9,7 @@ import org.springframework.web.server.ServerWebExchange
 class ScopeValidator(val scopeValidationConfiguration: ScopeValidationConfiguration) {
 
     fun validateScope(exchange: ServerWebExchange, scopeFromToken: String?): Boolean {
-        val scopesForRoute = scopeValidationConfiguration.scopes[resolveRouteId(exchange)]
+        val scopesForRoute = scopeValidationConfiguration.scopes[exchange.getRouteId()]
         val matchingScope = scopesForRoute?.find { route ->
             AntPathMatcher().match(route.path, exchange.request.path.toString())
         }
