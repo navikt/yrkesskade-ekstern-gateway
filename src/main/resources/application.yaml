@@ -6,8 +6,6 @@ spring:
         wiretap: true
       httpserver:
         wiretap: true
-#      default-filters:
-#        - RewritePath=/(?<base>.*?)/(?<segment>.*), /$\{segment}
       routes:
         - id: yrkesskade-melding-api
           uri: ${YRKESSKADE_MELDING_API}
