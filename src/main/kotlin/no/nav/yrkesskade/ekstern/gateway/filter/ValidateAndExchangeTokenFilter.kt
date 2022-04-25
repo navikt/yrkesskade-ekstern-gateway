@@ -45,7 +45,7 @@ class ValidateAndExchangeTokenFilter(
 
         val maskinportenToken = validatedTokens.getJwtToken(MASKINPORTEN)
 
-        val validScope = scopeValidator.validateScope(exchange, maskinportenToken.jwtTokenClaims.get("scope") as String)
+        val validScope = scopeValidator.validateScope(exchange, maskinportenToken.jwtTokenClaims.get("scope") as String?)
         if (!validScope) {
             return respondWithError(response, HttpStatus.FORBIDDEN)
         }
