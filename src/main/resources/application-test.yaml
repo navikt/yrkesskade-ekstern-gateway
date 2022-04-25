@@ -1,13 +1,16 @@
 server:
   port: 9081
 
+service:
+  wiremock:
+    enabled: true
+    port: 10099
 
 YRKESSKADE_MELDING_API: http://localhost:27015
 YRKESSKADE_KODEVERK: http://localhost:27016
 
 NAIS_CLUSTER_NAME: dev-gcp
-MASKINPORTEN_WELL_KNOWN_URL: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
-#MASKINPORTEN_WELL_KNOWN_URL: https://ver2.maskinporten.no/.well-known/oauth-authorization-server
-TOKEN_X_WELL_KNOWN_URL: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
+TOKEN_X_ENDPOINT_URL: http://localhost:${service.wiremock.port}/oauth2/v2.0/token
+MASKINPORTEN_WELL_KNOWN_URL: https://ver2.maskinporten.no/.well-known/oauth-authorization-server
 TOKEN_X_CLIENT_ID: dev-gcp:yrkesskade:yrkesskade-ekstern-gateway
 TOKEN_X_PRIVATE_JWK: ./src/test/resources/jwks/jwk.json

@@ -47,7 +47,7 @@ no.nav.security.jwt:
   client:
     registration:
       yrkesskade-melding-api:
-        token-endpoint-url: https://fakedings.dev-gcp.nais.io/fake/tokenx
+        token-endpoint-url: ${TOKEN_X_ENDPOINT_URL}
         grant-type: urn:ietf:params:oauth:grant-type:token-exchange
         scope: api://${YRKESSKADE_MELDING_API_CLIENT_ID}/.default
         authentication:
