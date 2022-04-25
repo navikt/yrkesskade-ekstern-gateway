@@ -1,8 +1,10 @@
 package no.nav.yrkesskade.ekstern.gateway.filter
 
 import no.nav.security.token.support.core.jwt.JwtToken
+import no.nav.yrkesskade.ekstern.gateway.ScopeValidator
 import no.nav.yrkesskade.ekstern.gateway.config.ScopeValidationConfiguration
 import no.nav.yrkesskade.ekstern.gateway.config.TokenXClientListProperties
+import no.nav.yrkesskade.ekstern.gateway.resolveRouteId
 import no.nav.yrkesskade.ekstern.gateway.tokenx.TokenXClient
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -29,7 +31,7 @@ private const val MASKINPORTEN = "maskinporten"
 class ValidateAndExchangeTokenFilter(
     val tokenXClient: TokenXClient,
     val validationHandler: JwtTokenValidationHandler,
-    val scopeValidationConfiguration: ScopeValidationConfiguration,
+    val scopeValidator: ScopeValidator,
     val tokenXClientListProperties: TokenXClientListProperties
 ) : GlobalFilter {
 
@@ -43,7 +45,7 @@ class ValidateAndExchangeTokenFilter(
 
         val maskinportenToken = validatedTokens.getJwtToken(MASKINPORTEN)
 
-        val validScope = validateScope(exchange, maskinportenToken.jwtTokenClaims.get("scope") as String)
+        val validScope = scopeValidator.validateScope(exchange, maskinportenToken.jwtTokenClaims.get("scope") as String)
         if (!validScope) {
             return respondWithError(response, HttpStatus.FORBIDDEN)
         }
@@ -72,25 +74,5 @@ class ValidateAndExchangeTokenFilter(
         return response.apply {
             this.setStatusCode(status)
         }.setComplete()
-    }
-
-    private fun validateScope(exchange: ServerWebExchange, scopeFromToken: String): Boolean {
-        val scopesForRoute = scopeValidationConfiguration.scopes[resolveRouteId(exchange)]
-        val matchingScope = scopesForRoute?.find { route ->
-            AntPathMatcher().match(route.path, exchange.request.path.toString())
-        }
-
-        if (matchingScope?.name.isNullOrBlank()) {
-            return false
-        }
-        if (matchingScope?.acceptsAnyScope() == true) {
-            return true
-        }
-        return matchingScope?.name == scopeFromToken
-    }
-
-    private fun resolveRouteId(exchange: ServerWebExchange): String {
-        val route: Route = exchange.attributes[ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR] as Route
-        return route.id
     }
 }
