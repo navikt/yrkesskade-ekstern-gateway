@@ -1,8 +1,11 @@
 server:
   port: 9081
 
-NAIS_CLUSTER_NAME: dev-gcp
 
+YRKESSKADE_MELDING_API: http://localhost:27015
+YRKESSKADE_KODEVERK: http://localhost:27016
+
+NAIS_CLUSTER_NAME: dev-gcp
 MASKINPORTEN_WELL_KNOWN_URL: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
 #MASKINPORTEN_WELL_KNOWN_URL: https://ver2.maskinporten.no/.well-known/oauth-authorization-server
 TOKEN_X_WELL_KNOWN_URL: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
