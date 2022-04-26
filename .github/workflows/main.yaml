@@ -1,6 +1,8 @@
 name: Build and deploy yrkesskade-ekstern-gateway
 on:
-  push
+  push:
+    branches:
+      - main
 
 env:
   IMAGE: "ghcr.io/${{ github.repository }}:${{ github.sha }}"
