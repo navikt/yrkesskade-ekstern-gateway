@@ -35,14 +35,14 @@ class ValidateAndExchangeTokenFilter(
         val validatedTokens = validationHandler.getValidatedTokens(exchange.request)
 
         if (!validatedTokens.hasValidToken()) {
-            return respondWithError(response, HttpStatus.UNAUTHORIZED)
+            return errorResponse(response, HttpStatus.UNAUTHORIZED)
         }
 
         val maskinportenToken = validatedTokens.getJwtToken(MASKINPORTEN)
 
         val validScope = scopeValidator.validateScope(exchange, maskinportenToken.jwtTokenClaims.get("scope") as String?)
         if (!validScope) {
-            return respondWithError(response, HttpStatus.FORBIDDEN)
+            return errorResponse(response, HttpStatus.FORBIDDEN)
         }
 
         exchangeTokenIfNecessary(maskinportenToken, exchange)
@@ -65,7 +65,7 @@ class ValidateAndExchangeTokenFilter(
             .build()
     }
 
-    private fun respondWithError(response: ServerHttpResponse, status: HttpStatus): Mono<Void> {
+    private fun errorResponse(response: ServerHttpResponse, status: HttpStatus): Mono<Void> {
         return response.apply {
             this.statusCode = status
         }.setComplete()

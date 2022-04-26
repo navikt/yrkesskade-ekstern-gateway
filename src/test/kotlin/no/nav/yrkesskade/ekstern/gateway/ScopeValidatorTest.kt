@@ -3,13 +3,8 @@ package no.nav.yrkesskade.ekstern.gateway
 import no.nav.yrkesskade.ekstern.gateway.mock.TestMockServerInitialization
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
-import org.springframework.web.server.ServerWebExchange
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.cloud.gateway.route.Route
-import org.springframework.cloud.gateway.support.ServerWebExchangeUtils
-import org.springframework.mock.http.server.reactive.MockServerHttpRequest
-import org.springframework.mock.web.server.MockServerWebExchange
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 
