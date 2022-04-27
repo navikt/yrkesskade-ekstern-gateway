@@ -20,7 +20,7 @@ private const val MASKINPORTEN = "maskinporten"
 
 private const val YS_KILDE_HEADER_NAME = "x-nav-ys-kilde"
 
-private const val YS_KILDE_HEADER_VALUE = "ekstern"
+private const val YS_KILDE_EKSTERN = "ekstern"
 
 /**
  * Validerer Maskinporten-token og veksler i TokenX før requestet sendes videre til riktig uri.
@@ -52,7 +52,7 @@ class ValidateAndExchangeTokenFilter(
         exchangeTokenIfNecessary(maskinportenToken, exchange)
 
         exchange.request.mutate()
-            .header(YS_KILDE_HEADER_NAME, YS_KILDE_HEADER_VALUE)
+            .header(YS_KILDE_HEADER_NAME, YS_KILDE_EKSTERN)
             .build()
         return chain!!.filter(exchange)
     }
