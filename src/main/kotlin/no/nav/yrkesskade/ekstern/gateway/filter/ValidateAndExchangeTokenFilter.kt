@@ -9,6 +9,7 @@ import no.nav.yrkesskade.ekstern.gateway.tokenx.TokenXClient
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.gateway.filter.GatewayFilterChain
 import org.springframework.cloud.gateway.filter.GlobalFilter
+import org.springframework.core.annotation.Order
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.server.reactive.ServerHttpResponse
@@ -26,6 +27,7 @@ private const val YS_KILDE_EKSTERN = "ekstern"
  * Validerer Maskinporten-token og veksler i TokenX før requestet sendes videre til riktig uri.
  */
 @Component
+@Order(2)
 @EnableConfigurationProperties(value = [ScopeValidationConfiguration::class, TokenXClientListProperties::class])
 class ValidateAndExchangeTokenFilter(
     val tokenXClient: TokenXClient,
