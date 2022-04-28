@@ -2,7 +2,7 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
-    <springProfile name="local">
+    <springProfile name="!dev &amp; !prod">
         <appender name="text" class="ch.qos.logback.core.ConsoleAppender">
             <encoder>
                 <pattern>${CONSOLE_LOG_PATTERN}</pattern>
@@ -20,7 +20,7 @@
         <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="debug"/>
     </springProfile>
 
-    <springProfile name="!local">
+    <springProfile name="dev | prod">
         <appender name="secureJson" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <file>/secure-logs/secure.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
