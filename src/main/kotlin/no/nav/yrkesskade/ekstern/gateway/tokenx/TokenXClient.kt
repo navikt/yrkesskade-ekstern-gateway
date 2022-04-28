@@ -2,6 +2,7 @@ package no.nav.yrkesskade.ekstern.gateway.tokenx
 
 import no.nav.security.token.support.client.core.auth.ClientAssertion
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
+import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
@@ -11,6 +12,7 @@ import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.bodyToMono
 import reactor.core.scheduler.Schedulers
+import java.lang.invoke.MethodHandles
 import java.util.concurrent.CompletableFuture
 
 
@@ -19,6 +21,7 @@ import java.util.concurrent.CompletableFuture
 class TokenXClient(
     val clientConfigurationProperties: ClientConfigurationProperties,
 ) {
+    val logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
 
     /**
      * NB: navn på registration ([client]) må være identisk med gateway route-id
@@ -36,7 +39,8 @@ class TokenXClient(
     fun exchange(token: String, client: String): String? {
         val clientProperties = clientConfigurationProperties.registration[client]
         if (clientProperties == null) {
-            throw RuntimeException("ingen clientProperties på client $client")
+            logger.error("Ingen clientProperties på client $client")
+            throw RuntimeException("Ingen clientProperties på client $client")
         }
 
         val webClient = WebClient.builder()

@@ -51,9 +51,11 @@ spec:
     outbound:
       rules:
         - application: yrkesskade-melding-api
+        - application: yrkesskade-kodeverk
     inbound:
       rules:
         - application: yrkesskade-melding-api
+        - application: yrkesskade-kodeverk
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: {{springProfile}}

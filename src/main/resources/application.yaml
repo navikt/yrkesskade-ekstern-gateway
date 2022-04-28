@@ -6,13 +6,32 @@ spring:
         wiretap: true
       httpserver:
         wiretap: true
-#      default-filters:
-#        - RewritePath=/(?<base>.*?)/(?<segment>.*), /$\{segment}
       routes:
         - id: yrkesskade-melding-api
           uri: ${YRKESSKADE_MELDING_API}
           predicates:
-            - Path=/api/**
+            - Path=/api/v1/skademeldinger,/api/v3/**,/api/swagger-ui/**
+        - id: yrkesskade-kodeverk
+          uri: ${YRKESSKADE_KODEVERK}
+          predicates:
+            - Path=/api/v1/kodeverk/**
+
+token:
+  validation:
+    scopes:
+      yrkesskade-melding-api:
+        - name: "nav:yrkesskade:skademelding.write"
+          path: /api/v1/skademeldinger
+        - name: "noscope.apidoc"
+          path: /api/v3/**
+        - name: "noscope.swaggerui"
+          path: /api/swagger-ui/**
+      yrkesskade-kodeverk:
+        - name: "nav:yrkesskade:kodeverk.read"
+          path: /api/v1/kodeverk/**
+  tokenx:
+    client-list:
+      - yrkesskade-melding-api
 
 YRKESSKADE_MELDING_API_CLIENT_ID: ${NAIS_CLUSTER_NAME}:yrkesskade:yrkesskade-melding-api
 MASKINPORTEN_WELL_KNOWN_URL: https://ver2.maskinporten.no/.well-known/oauth-authorization-server
@@ -26,7 +45,7 @@ no.nav.security.jwt:
   client:
     registration:
       yrkesskade-melding-api:
-        token-endpoint-url: https://fakedings.dev-gcp.nais.io/fake/tokenx
+        token-endpoint-url: ${TOKEN_X_ENDPOINT_URL}
         grant-type: urn:ietf:params:oauth:grant-type:token-exchange
         scope: api://${YRKESSKADE_MELDING_API_CLIENT_ID}/.default
         authentication:

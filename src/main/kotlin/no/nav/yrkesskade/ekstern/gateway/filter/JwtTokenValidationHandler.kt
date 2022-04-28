@@ -10,10 +10,12 @@ import no.nav.security.token.support.core.configuration.IssuerConfiguration
 import no.nav.security.token.support.core.exceptions.IssuerConfigurationException
 import org.slf4j.LoggerFactory
 import org.springframework.http.server.reactive.ServerHttpRequest
+import org.springframework.stereotype.Component
 import java.util.AbstractMap.SimpleImmutableEntry
 import java.util.Optional
 import java.util.function.Supplier
 
+@Component
 class JwtTokenValidationHandler(private val config: MultiIssuerConfiguration) {
 
     fun getValidatedTokens(request: ServerHttpRequest): TokenValidationContext {

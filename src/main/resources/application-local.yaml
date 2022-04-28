@@ -4,10 +4,10 @@ server:
 NAIS_CLUSTER_NAME: dev-gcp
 
 MASKINPORTEN_WELL_KNOWN_URL: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
-#MASKINPORTEN_WELL_KNOWN_URL: https://ver2.maskinporten.no/.well-known/oauth-authorization-server
-TOKEN_X_WELL_KNOWN_URL: https://fakedings.dev-gcp.nais.io/fake/.well-known/openid-configuration
+TOKEN_X_ENDPOINT_URL: https://fakedings.dev-gcp.nais.io/fake/tokenx
 TOKEN_X_CLIENT_ID: dev-gcp:yrkesskade:yrkesskade-ekstern-gateway
 TOKEN_X_PRIVATE_JWK: ./src/test/resources/jwks/jwk.json
 
 
 YRKESSKADE_MELDING_API: http://localhost:8080
+YRKESSKADE_KODEVERK: http://localhost:8080
