@@ -35,6 +35,8 @@ spec:
           consumers:
             - name: "NAV"
               orgno: "889640782"
+            - name: "Forsvaret"
+              orgno: "986105174"
         - name: "kodeverk.read"
           enabled: true
           product: "yrkesskade"
@@ -42,6 +44,8 @@ spec:
           consumers:
             - name: "NAV"
               orgno: "889640782"
+            - name: "Forsvaret"
+              orgno: "986105174"
   tokenx:
     enabled: true
   azure:
