@@ -4,4 +4,4 @@ min-replicas: 1
 max-replicas: 1
 max-token-age: 120
 ingresses:
-  - "https://yrkesskade-ekstern-gateway.dev.nav.no"
+  - "https://yrkesskade-ekstern-gateway.ekstern.dev.nav.no"
