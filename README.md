@@ -13,10 +13,10 @@ Denne tjenesten tilgjengeliggjør de aktuelle APIene som trenger å nås utenfra
 | Yrkesskade kodeverk   | /api/v1/kodeverk/**    | nav:yrkesskade:kodeverk.read      |
 
 # Miljøer
-| miljø | URL                                           |
-|-------|-----------------------------------------------|
-| DEV   | https://yrkesskade-ekstern-gateway.dev.nav.no |
-| PROD  | https://yrkesskade-ekstern-gateway.nav.no     |
+| miljø | URL                                                   |
+|-------|-------------------------------------------------------|
+| DEV   | https://yrkesskade-ekstern-gateway.ekstern.dev.nav.no |
+| PROD  | https://yrkesskade-ekstern-gateway.nav.no             |
 
 ---
 
