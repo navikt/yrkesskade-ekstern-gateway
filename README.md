@@ -7,10 +7,12 @@ Denne tjenesten tilgjengeliggjør de aktuelle APIene som trenger å nås utenfra
 
 # Tjenester det redirectes til
 
-| Tjeneste              | Path                   | Scope                             |
-|-----------------------|------------------------|-----------------------------------|
-| Yrkesskademelding API | /api/v1/skademeldinger | nav:yrkesskade:skademelding.write |
-| Yrkesskade kodeverk   | /api/v1/kodeverk/**    | nav:yrkesskade:kodeverk.read      |
+| Tjeneste                    | Path                           | Scope                             |
+|-----------------------------|--------------------------------|-----------------------------------|
+| Yrkesskademelding API       | /api/v1/skademeldinger         | nav:yrkesskade:skademelding.write |
+| Yrkesskademelding API-doc   | /api/v1/skademeldinger/api-doc | N/A                               |
+| Yrkesskade kodeverk         | /api/v1/kodeverk/**            | nav:yrkesskade:kodeverk.read      |
+| Yrkesskade kodeverk API-doc | /api/v1/kodeverk/api-doc       | N/A                               |
 
 # Miljøer
 | miljø | URL                                                   |

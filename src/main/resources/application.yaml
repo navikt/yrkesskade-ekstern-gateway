@@ -10,18 +10,22 @@ spring:
         - id: yrkesskade-melding-api
           uri: ${YRKESSKADE_MELDING_API}
           predicates:
-            - Path=/api/v1/skademeldinger,/api/v3/**,/api/swagger-ui/**
+            - Path=/api/v1/skademeldinger/**
+          filters:
+            - RewritePath=/api/v1/skademeldinger/api-doc, /api/v3/api-docs
         - id: yrkesskade-kodeverk
           uri: ${YRKESSKADE_KODEVERK}
           predicates:
             - Path=/api/v1/kodeverk/**
+          filters:
+            - RewritePath=/api/v1/kodeverk/api-doc, /v3/api-docs
 
 token:
   validation:
     scopes:
       yrkesskade-melding-api:
         - name: "nav:yrkesskade:skademelding.write"
-          path: /api/v1/skademeldinger
+          path: /api/v1/skademeldinger/**
         - name: "noscope.apidoc"
           path: /api/v3/**
         - name: "noscope.swaggerui"
@@ -29,6 +33,10 @@ token:
       yrkesskade-kodeverk:
         - name: "nav:yrkesskade:kodeverk.read"
           path: /api/v1/kodeverk/**
+        - name: "noscope.apidoc"
+          path: /v3/api-docs
+        - name: "noscope.swaggerui"
+          path: /api/swagger-ui/**
   tokenx:
     client-list:
       - yrkesskade-melding-api
