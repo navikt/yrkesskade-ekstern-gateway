@@ -17,7 +17,9 @@
         <root level="info">
             <appender-ref ref="text"/>
         </root>
-        <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="debug"/>
+
+        <!--        For å unngå å logge request body -->
+        <logger name="reactor.netty.channel.ChannelOperationsHandler" level="OFF"/>
     </springProfile>
 
     <springProfile name="dev | prod">
@@ -30,5 +32,8 @@
         </root>
 
         <logger name="no.nav.yrkesskade" level="info"/>
+
+        <!--        For å unngå å logge request body -->
+        <logger name="reactor.netty.channel.ChannelOperationsHandler" level="OFF"/>
     </springProfile>
 </configuration>
