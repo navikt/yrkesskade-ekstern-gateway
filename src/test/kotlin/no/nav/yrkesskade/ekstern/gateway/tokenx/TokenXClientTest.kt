@@ -1,10 +1,12 @@
 package no.nav.yrkesskade.ekstern.gateway.tokenx
 
-import no.nav.yrkesskade.ekstern.gateway.kodeverkExchange
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.Disabled
 
 private const val TOKENX_CLIENT_NAME = "yrkesskade-melding-api"
 
@@ -25,7 +27,7 @@ internal class TokenXClientTest {
 
 //    @Test
     fun exchange() {
-        val exchangeToken = tokenXClient.exchange(token, TOKENX_CLIENT_NAME, kodeverkExchange())
+        val exchangeToken = tokenXClient.exchange(token, TOKENX_CLIENT_NAME)
         Assertions.assertThat(exchangeToken).isNotNull
         println(exchangeToken)
     }

@@ -48,30 +48,30 @@ internal class ValidateAndExchangeTokenFilterMockTest {
         every { tokenValidationContext.getJwtToken(any()) } answers { token }
         every { validationHandler.getValidatedTokens(any()) } answers { tokenValidationContext }
         every { scopeValidator.validateScope(any(), any()) } answers { true }
-        every { tokenXClient.exchange(any(), any(), any()) } answers { token.tokenAsString }
+        every { tokenXClient.exchange(any(), any()) } answers { token.tokenAsString }
     }
 
     @Test
     fun `filter on skademelding request should perform tokenX`() {
         tokenFilter.filter(skademeldingExchange(), filterChain)
-        verify(exactly = 1) { tokenXClient.exchange(any(), any(), any()) }
+        verify(exactly = 1) { tokenXClient.exchange(any(), any()) }
     }
 
     @Test
     fun `filter on swagger request should perform tokenX`() {
         tokenFilter.filter(swaggerExchange(), filterChain)
-        verify(exactly = 1) { tokenXClient.exchange(any(), any(), any()) }
+        verify(exactly = 1) { tokenXClient.exchange(any(), any()) }
     }
 
     @Test
     fun `filter on apidoc request should perform tokenX`() {
         tokenFilter.filter(apidocExchange(), filterChain)
-        verify(exactly = 1) { tokenXClient.exchange(any(), any(), any()) }
+        verify(exactly = 1) { tokenXClient.exchange(any(), any()) }
     }
 
     @Test
     fun `filter on kodeverk request should not perform tokenX`() {
         tokenFilter.filter(kodeverkExchange(), filterChain)
-        verify(exactly = 0) { tokenXClient.exchange(any(), any(), any()) }
+        verify(exactly = 0) { tokenXClient.exchange(any(), any()) }
     }
 }
