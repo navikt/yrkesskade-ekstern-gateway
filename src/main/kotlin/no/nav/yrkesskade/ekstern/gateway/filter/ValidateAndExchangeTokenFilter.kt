@@ -11,7 +11,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.gateway.filter.GatewayFilterChain
 import org.springframework.cloud.gateway.filter.GlobalFilter
 import org.springframework.core.annotation.Order
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.server.reactive.ServerHttpResponse
 import org.springframework.stereotype.Component
@@ -72,10 +71,8 @@ class ValidateAndExchangeTokenFilter(
             return
         }
 
-        val exchangedToken = tokenXClient.exchange(maskinportenToken.tokenAsString, client)
-        exchange.request.mutate()
-            .header(HttpHeaders.AUTHORIZATION, "Bearer $exchangedToken")
-            .build()
+        logger.info("Fant treff i TokenX-lista for klient $client. Utfører tokenX.")
+        tokenXClient.exchange(maskinportenToken.tokenAsString, client, exchange)
         logger.info("Utført tokenX")
     }
 
